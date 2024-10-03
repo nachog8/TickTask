@@ -14,14 +14,14 @@ export const registerUser = asyncHandler(async (req, res) => {
   //validation
   if (!name || !email || !password) {
     // 400 Bad Request
-    res.status(400).json({ message: "All fields are required" });
+    res.status(400).json({ message: "Todos los campos son obligatorios" });
   }
 
   // check password length
   if (password.length < 6) {
     return res
       .status(400)
-      .json({ message: "Password must be at least 6 characters" });
+      .json({ message: "La contraseña debe tener al menos 6 caracteres" });
   }
 
   // check if user already exists
@@ -29,7 +29,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   if (userExists) {
     // bad request
-    return res.status(400).json({ message: "User already exists" });
+    return res.status(400).json({ message: "El usuario ya existe" });
   }
 
   // create new user
@@ -66,7 +66,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       token,
     });
   } else {
-    res.status(400).json({ message: "Invalid user data" });
+    res.status(400).json({ message: "Datos de usuario no válidos" });
   }
 });
 
@@ -78,14 +78,14 @@ export const loginUser = asyncHandler(async (req, res) => {
   // validation
   if (!email || !password) {
     // 400 Bad Request
-    return res.status(400).json({ message: "All fields are required" });
+    return res.status(400).json({ message: "Todos los campos son obligatorios" });
   }
 
   // check if user exists
   const userExists = await User.findOne({ email });
 
   if (!userExists) {
-    return res.status(404).json({ message: "User not found, sign up!" });
+    return res.status(404).json({ message: "Usuario no encontrado, ¡regístrate!" });
   }
 
   // check id the password match the hashed password in the database
@@ -93,7 +93,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   if (!isMatch) {
     // 400 Bad Request
-    return res.status(400).json({ message: "Invalid credentials" });
+    return res.status(400).json({ message: "Credenciales inválidas" });
   }
 
   // generate token with user id
@@ -123,7 +123,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       token,
     });
   } else {
-    res.status(400).json({ message: "Invalid email or password" });
+    res.status(400).json({ message: "Correo electrónico o contraseña no válidos" });
   }
 });
 
@@ -136,7 +136,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
     path: "/",
   });
 
-  res.status(200).json({ message: "User logged out" });
+  res.status(200).json({ message: "Usuario desconectado" });
 });
 
 // get user
@@ -148,7 +148,7 @@ export const getUser = asyncHandler(async (req, res) => {
     res.status(200).json(user);
   } else {
     // 404 Not Found
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: "Usuario no encontrado" });
   }
 });
 
@@ -178,7 +178,7 @@ export const updateUser = asyncHandler(async (req, res) => {
     });
   } else {
     // 404 Not Found
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: "Usuario no encontrado" });
   }
 });
 
@@ -188,7 +188,7 @@ export const userLoginStatus = asyncHandler(async (req, res) => {
 
   if (!token) {
     // 401 Unauthorized
-    res.status(401).json({ message: "Not authorized, please login!" });
+    res.status(401).json({ message: "¡No autorizado, por favor iniciar sesión!" });
   }
   // verify the token
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -206,12 +206,12 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   // if user exists
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: "Usuario no encontrado" });
   }
 
   // check if user is already verified
   if (user.isVerified) {
-    return res.status(400).json({ message: "User is already verified" });
+    return res.status(400).json({ message: "El usuario ya está verificado" });
   }
 
   let token = await Token.findOne({ userId: user._id });
@@ -252,7 +252,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
     return res.json({ message: "Email sent" });
   } catch (error) {
     console.log("Error sending email: ", error);
-    return res.status(500).json({ message: "Email could not be sent" });
+    return res.status(500).json({ message: "No se pudo enviar el correo electrónico" });
   }
 });
 
@@ -261,7 +261,7 @@ export const verifyUser = asyncHandler(async (req, res) => {
   const { verificationToken } = req.params;
 
   if (!verificationToken) {
-    return res.status(400).json({ message: "Invalid verification token" });
+    return res.status(400).json({ message: "Token de verificación no válido" });
   }
   // hash the verification token --> because it was hashed before saving
   const hashedToken = hashToken(verificationToken);
@@ -276,7 +276,7 @@ export const verifyUser = asyncHandler(async (req, res) => {
   if (!userToken) {
     return res
       .status(400)
-      .json({ message: "Invalid or expired verification token" });
+      .json({ message: "Token de verificación no válido o vencido" });
   }
 
   //find user with the user id in the token
@@ -284,13 +284,13 @@ export const verifyUser = asyncHandler(async (req, res) => {
 
   if (user.isVerified) {
     // 400 Bad Request
-    return res.status(400).json({ message: "User is already verified" });
+    return res.status(400).json({ message: "El usuario ya está verificado" });
   }
 
   // update user to verified
   user.isVerified = true;
   await user.save();
-  res.status(200).json({ message: "User verified" });
+  res.status(200).json({ message: "Usuario verificado" });
 });
 
 // forgot password
@@ -298,7 +298,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
   if (!email) {
-    return res.status(400).json({ message: "Email is required" });
+    return res.status(400).json({ message: "Se requiere correo electrónico" });
   }
 
   // check if user exists
@@ -306,7 +306,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
 
   if (!user) {
     // 404 Not Found
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: "Usuario no encontrado" });
   }
 
   // see if reset token exists
@@ -347,7 +347,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     res.json({ message: "Email sent" });
   } catch (error) {
     console.log("Error sending email: ", error);
-    return res.status(500).json({ message: "Email could not be sent" });
+    return res.status(500).json({ message: "No se pudo enviar el correo electrónico" });
   }
 });
 
@@ -357,7 +357,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const { password } = req.body;
 
   if (!password) {
-    return res.status(400).json({ message: "Password is required" });
+    return res.status(400).json({ message: "Se requiere contraseña" });
   }
 
   // hash the reset token
@@ -371,7 +371,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
   });
 
   if (!userToken) {
-    return res.status(400).json({ message: "Invalid or expired reset token" });
+    return res.status(400).json({ message: "Token de reinicio no válido o vencido" });
   }
 
   // find user with the user id in the token
@@ -381,7 +381,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
   user.password = password;
   await user.save();
 
-  res.status(200).json({ message: "Password reset successfully" });
+  res.status(200).json({ message: "Restablecimiento de contraseña exitoso" });
 });
 
 // change password
@@ -389,7 +389,7 @@ export const changePassword = asyncHandler(async (req, res) => {
   const { currentPassword, newPassword } = req.body;
 
   if (!currentPassword || !newPassword) {
-    return res.status(400).json({ message: "All fields are required" });
+    return res.status(400).json({ message: "Todos los campos son obligatorios" });
   }
 
   //find user by id
@@ -399,15 +399,15 @@ export const changePassword = asyncHandler(async (req, res) => {
   const isMatch = await bcrypt.compare(currentPassword, user.password);
 
   if (!isMatch) {
-    return res.status(400).json({ message: "Invalid password!" });
+    return res.status(400).json({ message: "¡Contraseña inválida!" });
   }
 
   // reset password
   if (isMatch) {
     user.password = newPassword;
     await user.save();
-    return res.status(200).json({ message: "Password changed successfully" });
+    return res.status(200).json({ message: "Contraseña cambiada exitosamente" });
   } else {
-    return res.status(400).json({ message: "Password could not be changed!" });
+    return res.status(400).json({ message: "¡No se pudo cambiar la contraseña!" });
   }
 });

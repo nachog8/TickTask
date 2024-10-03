@@ -13,13 +13,13 @@ function LoginForm() {
     <form className="relative m-[2rem] px-10 py-14 rounded-lg bg-white w-full max-w-[520px]">
       <div className="relative z-10">
         <h1 className="mb-2 text-center text-[1.35rem] font-medium">
-          Inicie sesión en su cuenta
+          Iniciar sesión
         </h1>
         <p className="mb-8 px-[2rem] text-center text-[#999] text-[14px]">
-          Inicie sesión ahora. ¿No tiene una cuenta?{" "}
+          ¿No tiene una cuenta?{" "}
           <a
             href="/register"
-            className="font-bold text-[#2ECC71] hover:text-[#7263F3] transition-all duration-300"
+            className="font-bold text-[#2ECC71] hover:text-[#1abc9c] transition-all duration-300"
           >
             Regístrate
           </a>
@@ -36,7 +36,7 @@ function LoginForm() {
             onChange={(e) => handlerUserInput("email")(e)}
             name="email"
             className="px-4 py-3 border-[2px] rounded-md outline-[#2ECC71] text-gray-800"
-            placeholder="johndoe@gmail.com"
+            placeholder="juanperez@gmail.com"
           />
         </div>
         <div className="relative mt-[1rem] flex flex-col">
@@ -50,7 +50,7 @@ function LoginForm() {
             onChange={(e) => handlerUserInput("password")(e)}
             name="password"
             className="px-4 py-3 border-[2px] rounded-md outline-[#2ECC71] text-gray-800"
-            placeholder="***************"
+            placeholder="********"
           />
           <button
             type="button"
@@ -66,7 +66,7 @@ function LoginForm() {
         <div className="mt-4 flex justify-end">
           <a
             href="/forgot-password"
-            className="font-bold text-[#2ECC71] text-[14px] hover:text-[#7263F3] transition-all duration-300"
+            className="font-bold text-[#2ECC71] text-[14px] hover:text-[#1abc9c] transition-all duration-300"
           >
             ¿Has olvidado tu contraseña?
           </a>
@@ -78,7 +78,7 @@ function LoginForm() {
             onClick={loginUser}
             className="mt-[1.5rem] flex-1 px-4 py-3 font-bold bg-[#2ECC71] text-white rounded-md hover:bg-[#1abc9c] transition-colors"
           >
-            Iniciar sesión ahora
+            Iniciar sesión
           </button>
         </div>
       </div>

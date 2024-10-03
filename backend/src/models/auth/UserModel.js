@@ -5,17 +5,17 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please provide your name"],
+      required: [true, "Por favor proporcione su nombre"],
     },
 
     email: {
       type: String,
-      required: [true, "Please an email"],
+      required: [true, "Por favor envíe un correo electrónico"],
       unique: true,
       trim: true,
       match: [
         /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
-        "Please add a valid email",
+        "Por favor, añade un correo electrónico válido",
       ],
     },
     password: {
@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema(
 
     bio: {
       type: String,
-      default: "I am a new user.",
+      default: "Soy un nuevo usuario.",
     },
 
     role: {

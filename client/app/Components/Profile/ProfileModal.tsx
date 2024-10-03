@@ -85,7 +85,7 @@ function ProfileModal() {
         >
           <div className="pt-2 grid grid-cols-[150px_1fr]">
             <label htmlFor="name" className="text-sm font-medium">
-              Full Name
+              Nombre completo
             </label>
             <input
               type="text"
@@ -99,7 +99,7 @@ function ProfileModal() {
 
           <div className="pt-4 grid grid-cols-[150px_1fr] border-t-2 border-t-[#323232]/10">
             <label htmlFor="email" className="text-sm font-medium">
-              Email Address
+              Correo Electrónico
             </label>
             <div className="relative w-full">
               <input
@@ -119,7 +119,7 @@ function ProfileModal() {
           <div className="pt-4 grid grid-cols-2 gap-4 border-t-2 border-t-[#323232]/10">
             <div className="flex flex-col gap-1">
               <label htmlFor="oldPassWord" className="text-sm font-medium">
-                Old Password
+                Contraseña anterior
               </label>
               <input
                 type="password"
@@ -132,7 +132,7 @@ function ProfileModal() {
 
             <div className="flex flex-col gap-1">
               <label htmlFor="newPassword" className="text-sm font-medium">
-                New Password
+                Nueva Contraseña
               </label>
               <input
                 type="password"
@@ -150,7 +150,7 @@ function ProfileModal() {
                 hover:bg-blue-400 transition-all duration-300"
               onClick={() => changePassword(oldPassword, newPassword)}
             >
-              Change Password
+              Cambiar la contraseña
             </button>
           </div>
 
@@ -159,14 +159,14 @@ function ProfileModal() {
               className="mt-3 py-2 px-4 bg-transparent text-black text-sm font-medium rounded-md border-2 border-[#323232]/10
                 hover:bg-[#EB4E31] hover:border-transparent hover:text-white transition-all duration-300"
             >
-              Cancel
+              Cancelar
             </button>
             <button
               type="submit"
               className="mt-3 py-2 px-4 bg-[#3aafae] text-white text-sm font-medium rounded-md
                 hover:bg-[#2e8d8c]/90 transition-all duration-300"
             >
-              Save Changes
+              Guardar cambios
             </button>
           </div>
         </form>

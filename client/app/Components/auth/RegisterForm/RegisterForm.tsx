@@ -19,7 +19,7 @@ function RegisterForm() {
           Crea una cuenta ¿Ya tienes una cuenta?{" "}
           <a
             href="/login"
-            className="font-bold text-[#2ECC71] hover:text-[#7263F3] transition-all duration-300"
+            className="font-bold text-[#2ECC71] hover:text-[#1abc9c] transition-all duration-300"
           >
             Inicie sesión
           </a>

@@ -9,7 +9,7 @@ const UserContext = React.createContext();
 axios.defaults.withCredentials = true;
 
 export const UserContextProvider = ({ children }) => {
-  const serverUrl = "https://ticktask.onrender.com";
+  const serverUrl = "http://localhost:8000";
 
   const router = useRouter();
 
@@ -30,14 +30,14 @@ export const UserContextProvider = ({ children }) => {
       !userState.password ||
       userState.password.length < 6
     ) {
-      toast.error("Please enter a valid email and password (min 6 characters)");
+      toast.error("Por favor, introduzca un correo electrónico y una contraseña válidos (mínimo 6 caracteres)");
       return;
     }
 
     try {
       const res = await axios.post(`${serverUrl}/api/v1/register`, userState);
-      console.log("User registered successfully", res.data);
-      toast.success("User registered successfully");
+      console.log("Usuario registrado exitosamente", res.data);
+      toast.success("Usuario registrado exitosamente");
 
       // clear the form
       setUserState({
@@ -49,7 +49,7 @@ export const UserContextProvider = ({ children }) => {
       // redirect to login page
       router.push("/login");
     } catch (error) {
-      console.log("Error registering user", error);
+      console.log("Error al registrar usuario", error);
       toast.error(error.response.data.message);
     }
   };
@@ -69,7 +69,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("User logged in successfully");
+      toast.success("El usuario ha iniciado sesión correctamente");
 
       // clear the form
       setUserState({
@@ -83,7 +83,7 @@ export const UserContextProvider = ({ children }) => {
       // push user to the dashboard page
       router.push("/");
     } catch (error) {
-      console.log("Error logging in user", error);
+      console.log("Error al iniciar sesión en el usuario", error);
       toast.error(error.response.data.message);
     }
   };
@@ -104,7 +104,7 @@ export const UserContextProvider = ({ children }) => {
         router.push("/login");
       }
     } catch (error) {
-      console.log("Error getting user login status", error);
+      console.log("Error al obtener el estado de inicio de sesión del usuario", error);
     }
 
     return loggedIn;
@@ -117,14 +117,14 @@ export const UserContextProvider = ({ children }) => {
         withCredentials: true, // send cookies to the server
       });
 
-      toast.success("User logged out successfully");
+      toast.success("El usuario cerró sesión exitosamente");
 
       setUser({});
 
       // redirect to login page
       router.push("/login");
     } catch (error) {
-      console.log("Error logging out user", error);
+      console.log("Error al cerrar sesión de usuario", error);
       toast.error(error.response.data.message);
     }
   };
@@ -146,7 +146,7 @@ export const UserContextProvider = ({ children }) => {
 
       setLoading(false);
     } catch (error) {
-      console.log("Error getting user details", error);
+      console.log("Error al obtener los detalles del usuario", error);
       setLoading(false);
       toast.error(error.response.data.message);
     }
@@ -170,11 +170,11 @@ export const UserContextProvider = ({ children }) => {
         };
       });
 
-      toast.success("User updated successfully");
+      toast.success("Usuario actualizado con éxito");
 
       setLoading(false);
     } catch (error) {
-      console.log("Error updating user details", error);
+      console.log("Error al actualizar los detalles del usuario", error);
       setLoading(false);
       toast.error(error.response.data.message);
     }
@@ -192,10 +192,10 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Email verification sent successfully");
+      toast.success("Verificación de correo electrónico enviada con éxito");
       setLoading(false);
     } catch (error) {
-      console.log("Error sending email verification", error);
+      console.log("Error al enviar el correo electrónico de verificación", error);
       setLoading(false);
       toast.error(error.response.data.message);
     }
@@ -213,7 +213,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("User verified successfully");
+      toast.success("Usuario verificado con éxito");
 
       // refresh the user details
       getUser();
@@ -222,7 +222,7 @@ export const UserContextProvider = ({ children }) => {
       // redirect to home page
       router.push("/");
     } catch (error) {
-      console.log("Error verifying user", error);
+      console.log("Error al verificar el usuario", error);
       toast.error(error.response.data.message);
       setLoading(false);
     }
@@ -243,10 +243,10 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Forgot password email sent successfully");
+      toast.success("Correo electrónico de contraseña olvidada enviado exitosamente");
       setLoading(false);
     } catch (error) {
-      console.log("Error sending forgot password email", error);
+      console.log("Error al enviar el correo electrónico de contraseña olvidada", error);
       toast.error(error.response.data.message);
       setLoading(false);
     }
@@ -267,12 +267,12 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Password reset successfully");
+      toast.success("Restablecimiento de contraseña exitoso");
       setLoading(false);
       // redirect to login page
       router.push("/login");
     } catch (error) {
-      console.log("Error resetting password", error);
+      console.log("Error al restablecer la contraseña", error);
       toast.error(error.response.data.message);
       setLoading(false);
     }
@@ -291,10 +291,10 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Password changed successfully");
+      toast.success("Contraseña cambiada exitosamente");
       setLoading(false);
     } catch (error) {
-      console.log("Error changing password", error);
+      console.log("Error al cambiar contraseña", error);
       toast.error(error.response.data.message);
       setLoading(false);
     }
@@ -315,7 +315,7 @@ export const UserContextProvider = ({ children }) => {
       setAllUsers(res.data);
       setLoading(false);
     } catch (error) {
-      console.log("Error getting all users", error);
+      console.log("Error al obtener todos los usuarios", error);
       toast.error(error.response.data.message);
       setLoading(false);
     }
@@ -343,12 +343,12 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("User deleted successfully");
+      toast.success("Usuario eliminado exitosamente");
       setLoading(false);
       // refresh the users list
       getAllUsers();
     } catch (error) {
-      console.log("Error deleting user", error);
+      console.log("Error al eliminar usuario", error);
       toast.error(error.response.data.message);
       setLoading(false);
     }

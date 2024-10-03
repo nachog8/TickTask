@@ -41,8 +41,8 @@ function Header() {
       </div>
       <div className="h-[50px] flex items-center gap-[10.4rem]">
         <button
-          className="px-8 py-3 bg-[#3aafae] text-white rounded-[50px]
-          hover:bg-[#00A1F1] hover:text-white transition-all duration-200 ease-in-out"
+          className="px-8 py-3 bg-[#1abc9c] text-white rounded-[50px]
+          hover:bg-[#3aafae] hover:text-white transition-all duration-200 ease-in-out"
           onClick={() => {
             if (userId) {
               openModalForAdd();
@@ -60,7 +60,7 @@ function Header() {
             passHref
             target="_blank"
             rel="noopener noreferrer"
-            className="h-[40px] w-[40px] text-purple-500 rounded-full flex items-center justify-center text-lg border-2 border-[#E6E6E6]"
+            className="h-[40px] w-[40px] text-black rounded-full flex items-center justify-center text-lg border-2 border-[#E6E6E6]"
           >
             {github}
           </Link>
