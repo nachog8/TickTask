@@ -25,6 +25,11 @@ function ProfileModal() {
   //state
   const [oldPassword, setOldPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
+  const [showPasswordOld, setShowPasswordOld] = React.useState(false);
+  const [showPasswordNew, setShowPasswordNew] = React.useState(false);
+
+  const togglePasswordOld = () => setShowPasswordOld(!showPasswordOld);
+  const togglePasswordNew = () => setShowPasswordNew(!showPasswordNew);
 
   const handlePassword = (type: string) => (e: any) => {
     if (type === "old") {
@@ -32,6 +37,15 @@ function ProfileModal() {
     } else {
       setNewPassword(e.target.value);
     }
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    updateUser(e, {
+      name: userState.name,
+      email: userState.email,
+    });
+    closeModal(); // Cerrar modal al guardar cambios
   };
 
   return (
@@ -75,13 +89,7 @@ function ProfileModal() {
         <form
           action=""
           className="mt-4 pt-2 flex flex-col gap-4 border-t-2 border-t-[#323232]/10"
-          onSubmit={(e) => {
-            e.preventDefault();
-            updateUser(e, {
-              name: userState.name,
-              email: userState.email,
-            });
-          }}
+          onSubmit={handleSubmit} // Cerrar modal al guardar cambios
         >
           <div className="pt-2 grid grid-cols-[150px_1fr]">
             <label htmlFor="name" className="text-sm font-medium">
@@ -121,26 +129,54 @@ function ProfileModal() {
               <label htmlFor="oldPassWord" className="text-sm font-medium">
                 Contraseña anterior
               </label>
-              <input
-                type="password"
-                id="oldPassword"
-                value={oldPassword}
-                onChange={handlePassword("old")}
-                className="py-[0.4rem] px-3 font-medium rounded-lg border-2 border-[#323232]/10"
-              />
+                <div className="relative w-full">
+                <input
+                  type={showPasswordOld ? "text" : "password"}
+                  id="oldPassword"
+                  value={oldPassword}
+                  onChange={handlePassword("old")}
+                  className="w-full py-[0.4rem] px-3 pr-10 font-medium rounded-lg border-2 border-[#323232]/10"
+                  placeholder="********"
+                />
+                <button
+                  type="button"
+                  className="absolute p-1 right-2 top-[50%] transform -translate-y-1/2 text-[22px] text-[#999] opacity-45"
+                  onClick={togglePasswordOld}
+                >
+                  {showPasswordOld ? (
+                  <i className="fas fa-eye-slash"></i>
+                  ) : (
+                  <i className="fas fa-eye"></i>
+                  )}
+                </button>
+                </div>
             </div>
 
             <div className="flex flex-col gap-1">
               <label htmlFor="newPassword" className="text-sm font-medium">
                 Nueva Contraseña
               </label>
-              <input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                onChange={handlePassword("new")}
-                className="py-[0.4rem] px-3 font-medium rounded-lg border-2 border-[#323232]/10"
-              />
+              <div className="relative w-full">
+                <input
+                  type={showPasswordNew ? "text" : "password"}
+                  id="newPassword"
+                  value={newPassword}
+                  onChange={handlePassword("new")}
+                  className="w-full py-[0.4rem] px-3 font-medium rounded-lg border-2 border-[#323232]/10"
+                  placeholder="********"
+                />
+                <button
+                  type="button"
+                  className="absolute p-1 right-4 top-[50%] transform -translate-y-1/2 text-[22px] text-[#999] opacity-45"
+                  onClick={togglePasswordNew}
+                >
+                  {showPasswordNew ? (
+                    <i className="fas fa-eye-slash"></i>
+                  ) : (
+                    <i className="fas fa-eye"></i>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
           <div className="flex justify-end">
@@ -148,7 +184,9 @@ function ProfileModal() {
               type="button"
               className="py-3 px-4 bg-blue-500 text-white text-sm font-medium rounded-md
                 hover:bg-blue-400 transition-all duration-300"
-              onClick={() => changePassword(oldPassword, newPassword)}
+              onClick={() => {
+                changePassword(oldPassword, newPassword);
+              }}
             >
               Cambiar la contraseña
             </button>
@@ -158,6 +196,7 @@ function ProfileModal() {
             <button
               className="mt-3 py-2 px-4 bg-transparent text-black text-sm font-medium rounded-md border-2 border-[#323232]/10
                 hover:bg-[#EB4E31] hover:border-transparent hover:text-white transition-all duration-300"
+              onClick={() => closeModal()} // Cerrar modal al cancelar
             >
               Cancelar
             </button>
