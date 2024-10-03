@@ -148,18 +148,12 @@ export const deleteAllTasks = asyncHandler(async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const tasks = await TaskModel.find({ user: userId });
+    // Delete all tasks for the logged-in user
+    const deletedTasks = await TaskModel.deleteMany({ user: userId });
 
-    if (!tasks) {
-      res.status(404).json({ message: "¡No se encontraron tareas!" });
+    if (deletedTasks.deletedCount === 0) {
+      return res.status(404).json({ message: "¡No se encontraron tareas para eliminar!" });
     }
-
-    // check if the user is the owner of the task
-    if (!tasks.user.equals(userId)) {
-      res.status(401).json({ message: "¡No autorizado!" });
-    }
-
-    await TaskModel.deleteMany({ user: userId });
 
     return res.status(200).json({ message: "¡Todas las tareas eliminadas exitosamente!" });
   } catch (error) {
@@ -167,3 +161,5 @@ export const deleteAllTasks = asyncHandler(async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
