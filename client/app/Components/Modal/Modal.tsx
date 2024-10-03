@@ -1,6 +1,7 @@
 "use client";
 import { useTasks } from "@/context/taskContext";
 import useDetectOutside from "@/hooks/useDetectOutside";
+import toast from "react-hot-toast";
 import React, { useEffect } from "react";
 
 function Modal() {
@@ -34,12 +35,19 @@ function Modal() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
+    // Verifica si el título está vacío
+    if (!task.title || task.title.trim() === "") {
+      toast.error("El título de la tarea es obligatorio.");
+      return; // Detiene el envío del formulario
+    }
+  
     if (modalMode === "edit") {
       updateTask(task);
     } else if (modalMode === "add") {
       createTask(task);
     }
+    
     closeModal();
   };
 
